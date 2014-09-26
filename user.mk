@@ -1,6 +1,6 @@
 TARGETS := main
 
 
-main.SRC := main.cpp func.cpp
+main.SRCS := main.cpp func.cpp
 main.TYPE := executable
 

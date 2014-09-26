@@ -1,25 +1,66 @@
 .SUFFIXES:
 
-all: main
+include user.mk
 
-main: main.o func.o
-	g++ main.o func.o -o main
+define list_head
+$(word 1,$1)
+endef
 
-func.o: func.cpp
-	g++ -MM func.cpp > func.cpp.d
-	g++ -c func.cpp
+define list_tail
+$(wordlist 2,$(words $1),$1)
+endef
 
-main.o: main.cpp
-	g++ -MM main.cpp > main.cpp.d
-	g++ -c main.cpp
 
--include func.cpp.d
--include main.cpp.d
+src_ext := %.c %.cpp
 
+# $1 head
+# $2 tail
+# $3 file_name
+define src_name
+  $(if $1
+     ,$(if $(filter $1,$3)
+        ,$(patsubst $1,%,$3)
+        ,$(call src_name,$(call list_head,$2),$(call list_tail,$2),$3)
+      )
+     ,$(error not found "$3") 
+  )
+endef
+
+# $1 file_name
+define get_src_name
+$(strip $(call src_name,$(call list_head,$(src_ext)),$(call list_tail,$(src_ext)),$1))
+endef
+
+define process_dir
+$(foreach t,$(TARGETS),$(call process_$($t.TYPE)_target,$t))
+endef
+
+# $1 target name
+define process_executable_target
+$1: $(addsuffix .o,$(foreach s,$($1.SRCS),$(call get_src_name,$(s))))
+	g++ -o $$@ $$^
+$(foreach s,$($1.SRCS),$(call process_obj_$(suffix $(s))_target,$(call get_src_name,$(s))))
+ALL_DEPS += $1	
+endef
+
+# $1 base name
+#
+define process_obj_.cpp_target
+
+$1.o: $1.cpp
+	g++ -c $$^
+endef
+
+
+
+aa := $(call process_dir)
+#$(warning $(aa))
+$(eval $(aa))
+
+
+all: $(ALL_DEPS)
 
 .PHONY: clean
-
-
 clean:
 	rm -f main main.o func.o func.cpp.d main.cpp.d
 
