@@ -1,0 +1,68 @@
+#!/bin/bash
+
+
+
+
+main_h=$(cat << EOF
+#ifndef MAIN_H
+#define MAIN_H
+
+
+
+#endif
+EOF
+)
+
+
+
+
+main_cpp=$(cat << EOF
+#include "func.h"
+#include "main.h"
+
+int main()
+{
+  printHello();  
+
+  return 0;
+}
+EOF
+)
+
+
+func_h=$(cat << EOF
+#ifndef FUNC_H
+#define FUNC_H
+
+
+void printHello();
+
+
+#endif
+EOF
+)
+
+
+func_cpp=$(cat << EOF
+#include <iostream>
+
+
+#include "func.h"
+
+void printHello()
+{
+  std::cout << "Hello world" << std::endl;
+}
+
+
+
+EOF
+)
+
+for i in $(seq 1 ${files_count}); do
+  echo ${func_h} > func${i}.h
+  echo ${func_cpp} > func${i}.cpp
+  echo ${main_h} > main${i}.h
+  echo ${main_cpp} > main${i}.cpp
+done
+

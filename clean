@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -f main*.cpp main*.h func*.cpp func*.h
+
