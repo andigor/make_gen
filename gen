@@ -52,7 +52,9 @@ void printHello()
 
 echo > user.mk
 
-for i in $(seq 1 5); do
+for i in $(seq 1 10000); do
+  echo -n $i " "
+
   echo "${func_h}"    | sed 's|{i}|'${i}'|g' > func${i}.h
   echo "${func_cpp}"  | sed 's|{i}|'${i}'|g' > func${i}.cpp
   echo "${main_h}"    | sed 's|{i}|'${i}'|g' > main${i}.h
