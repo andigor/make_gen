@@ -40,7 +40,7 @@ define process_executable_target
 $1: $(addsuffix .o,$(foreach s,$($1.SRCS),$(call get_src_name,$(s))))
 	g++ -o $$@ $$^
 $(foreach s,$($1.SRCS),$(call process_obj_$(suffix $(s))_target,$(call get_src_name,$(s))))
-ALL_DEPS += $1	
+ALL_TARGETS += $1	
 endef
 
 # $1 base name
@@ -58,7 +58,7 @@ aa := $(call process_dir)
 $(eval $(aa))
 
 
-all: $(ALL_DEPS)
+all: $(ALL_TARGETS)
 
 .PHONY: clean
 clean:
