@@ -10,7 +10,7 @@ func.o: func.cpp
 	g++ -c func.cpp
 
 main.o: main.cpp
-	g++ -MM main.cpp
+	g++ -MM main.cpp > main.cpp.d
 	g++ -c main.cpp
 
 -include func.cpp.d
