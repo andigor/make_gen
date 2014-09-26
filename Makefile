@@ -1,6 +1,5 @@
 .SUFFIXES:
 
-include user.mk
 
 define list_head
 $(word 1,$1)
@@ -68,5 +67,6 @@ all: $(ALL_TARGETS)
 clean:
 	rm -f *.o *.d *.gch
 
+include user.mk
 -include $(ALL_DEPS_FILES)
 
