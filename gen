@@ -1,24 +1,21 @@
 #!/bin/bash
 
 
-
-
-main_h=$(cat << EOF
+main_h="
 #ifndef MAIN_H
 #define MAIN_H
 
 
 
 #endif
-EOF
-)
+"
 
 
 
 
-main_cpp=$(cat << EOF
-#include "func.h"
-#include "main.h"
+main_cpp="
+#include \"func{i}.h\"
+#include \"main{i}.h\"
 
 int main()
 {
@@ -26,11 +23,10 @@ int main()
 
   return 0;
 }
-EOF
-)
+"
 
 
-func_h=$(cat << EOF
+func_h="
 #ifndef FUNC_H
 #define FUNC_H
 
@@ -39,30 +35,34 @@ void printHello();
 
 
 #endif
-EOF
-)
+"
 
 
-func_cpp=$(cat << EOF
+func_cpp="
 #include <iostream>
 
 
-#include "func.h"
+#include \"func{i}.h\"
 
 void printHello()
 {
-  std::cout << "Hello world" << std::endl;
+  std::cout << \"Hello world ${i}\" << std::endl;
 }
+"
 
+echo > user.mk
 
+for i in $(seq 1 2); do
+  echo "${func_h}"    | sed 's|{i}|'${i}'|g' > func${i}.h
+  echo "${func_cpp}"  | sed 's|{i}|'${i}'|g' > func${i}.cpp
+  echo "${main_h}"    | sed 's|{i}|'${i}'|g' > main${i}.h
+  echo "${main_cpp}"  | sed 's|{i}|'${i}'|g' > main${i}.cpp  
+  
+  echo "
+TARGETS += main${i}
+main${i}.SRCS := main${i}.cpp func${i}.cpp
+main${i}.TYPE := executable
 
-EOF
-)
-
-for i in $(seq 1 ${files_count}); do
-  echo ${func_h} > func${i}.h
-  echo ${func_cpp} > func${i}.cpp
-  echo ${main_h} > main${i}.h
-  echo ${main_cpp} > main${i}.cpp
+        " >> user.mk 
 done
 
