@@ -63,10 +63,17 @@ endef
 
 
 
+start_time := $(shell date)
 aa := $(call process_dir)
-$(warning $(aa))
+process_dir_time := $(shell date)
+#$(warning $(aa))
 $(eval $(aa))
+eval_dir_time := $(shell date)
 
+
+$(warning $(start_time)) 
+$(warning $(process_dir_time))
+$(warning $(eval_dir_time))
 
 build_all: $(ALL_TARGETS)
 

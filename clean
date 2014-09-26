@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rm -f main*.cpp main*.h func*.cpp func*.h main* user.mk
+rm -f main*.cpp main*.h func*.cpp func*.h main* user.mk main*.o func*.o main*.d func*.d
 
 
