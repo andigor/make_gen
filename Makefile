@@ -1,5 +1,10 @@
 .SUFFIXES:
 
+all: build_all
+
+include user.mk
+
+
 
 define list_head
 $(word 1,$1)
@@ -56,17 +61,18 @@ endef
 
 
 
+
+
 aa := $(call process_dir)
 $(warning $(aa))
 $(eval $(aa))
 
 
-all: $(ALL_TARGETS)
+build_all: $(ALL_TARGETS)
 
-.PHONY: clean
+.PHONY: clean 
 clean:
 	rm -f *.o *.d *.gch
 
-include user.mk
 -include $(ALL_DEPS_FILES)
 
