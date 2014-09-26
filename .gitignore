@@ -1,4 +1,8 @@
 *.d
 *.o
 main
+main*
+func*
+user.mk
+
 
