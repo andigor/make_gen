@@ -64,7 +64,7 @@ all: $(ALL_TARGETS)
 
 .PHONY: clean
 clean:
-	rm -f *.o *.d
+	rm -f *.o *.d *.gch
 
 -include $(ALL_DEPS_FILES)
 
