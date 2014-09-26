@@ -49,7 +49,7 @@ define process_obj_.cpp_target
 
 $1.o: $1.cpp
 	g++ -MM $$^ > $1.d
-	g++ -c $$^
+	g++ -c $1.cpp
 ALL_DEPS_FILES += $1.d
 endef
 
