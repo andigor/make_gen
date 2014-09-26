@@ -48,7 +48,9 @@ endef
 define process_obj_.cpp_target
 
 $1.o: $1.cpp
+	g++ -MM $$^ > $1.d
 	g++ -c $$^
+ALL_DEPS_FILES += $1.d
 endef
 
 
@@ -63,4 +65,6 @@ all: $(ALL_TARGETS)
 .PHONY: clean
 clean:
 	rm -f *.o *.d
+
+-include $(ALL_DEPS_FILES)
 
