@@ -62,5 +62,5 @@ all: $(ALL_TARGETS)
 
 .PHONY: clean
 clean:
-	rm -f main main.o func.o func.cpp.d main.cpp.d
+	rm -f *.o *.d
 
