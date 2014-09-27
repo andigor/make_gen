@@ -2,6 +2,8 @@
 
 all: build_all
 
+$(warning include user.mk $(shell date))
+
 include user.mk
 
 
@@ -63,17 +65,17 @@ endef
 
 
 
-start_time := $(shell date)
+$(warning process_dir $(shell date))
 aa := $(call process_dir)
-process_dir_time := $(shell date)
-#$(warning $(aa))
+
+$(warning eval $(shell date))
 $(eval $(aa))
 eval_dir_time := $(shell date)
 
+$(warning finish $(shell date))
 
-$(warning $(start_time)) 
-$(warning $(process_dir_time))
-$(warning $(eval_dir_time))
+
+$(warning $(aa))
 
 build_all: $(ALL_TARGETS)
 
