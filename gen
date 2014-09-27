@@ -52,13 +52,13 @@ void printHello()
 
 echo > user.mk
 
-for i in $(seq 1 10000); do
+for i in $(seq 1 30000); do
   echo -n $i " "
 
-  echo "${func_h}"    | sed 's|{i}|'${i}'|g' > func${i}.h
-  echo "${func_cpp}"  | sed 's|{i}|'${i}'|g' > func${i}.cpp
-  echo "${main_h}"    | sed 's|{i}|'${i}'|g' > main${i}.h
-  echo "${main_cpp}"  | sed 's|{i}|'${i}'|g' > main${i}.cpp  
+#  echo "${func_h}"    | sed 's|{i}|'${i}'|g' > func${i}.h
+#  echo "${func_cpp}"  | sed 's|{i}|'${i}'|g' > func${i}.cpp
+#  echo "${main_h}"    | sed 's|{i}|'${i}'|g' > main${i}.h
+#  echo "${main_cpp}"  | sed 's|{i}|'${i}'|g' > main${i}.cpp  
   
   echo "
 TARGETS += main${i}
