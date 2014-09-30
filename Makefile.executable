@@ -1,0 +1,10 @@
+
+
+%.o: %.cpp
+	g++ -MM -MT '$@ aaa' $< > $<.d
+	g++ -c $<
+
+
+
+-include $(MAKECMDGOALS:.o=.cpp.d)
+

@@ -1,25 +1,28 @@
 .SUFFIXES:
 
-all: main
+all: 
 
-main: main.o func.o
-	g++ main.o func.o -o main
+-include main.d
 
-func.o: func.cpp
-	g++ -MM func.cpp > func.cpp.d
-	g++ -c func.cpp
+all: main aaa
 
-main.o: main.cpp
-	g++ -MM main.cpp > main.cpp.d
-	g++ -c main.cpp
+sources := main.cpp func.cpp
 
--include func.cpp.d
--include main.cpp.d
+sources_ext := %.cpp %.c %.h
+targets_ext := %.o
 
+main: objects = $(patsubst %.cpp,%.o,$(filter $(sources_ext),$^)) 
+main: targets = $(patsubst %.cpp,%.o,$(filter $(sources_ext),$?))
+main: deps    = $(patsubst %.cpp,%.cpp.d,$^)
+main: $(sources)
+	$(MAKE) -f Makefile.executable $(targets)
+	cat $(deps) > $@.d
+	g++ $(objects) -o $@
+
+aaa:
+	touch aaa
 
 .PHONY: clean
-
-
 clean:
-	rm -f main main.o func.o func.cpp.d main.cpp.d
+	rm -f main *.o *.d
 
