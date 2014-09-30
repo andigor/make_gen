@@ -4,23 +4,22 @@ all:
 
 -include main.d
 
-all: main aaa
+all: main
 
 sources := main.cpp func.cpp
 
-sources_ext := %.cpp %.c %.h
+sources_ext := %.cpp %.c
 targets_ext := %.o
 
 main: objects = $(patsubst %.cpp,%.o,$(filter $(sources_ext),$^)) 
-main: targets = $(patsubst %.cpp,%.o,$(filter $(sources_ext),$?))
+main: targets = $(patsubst %.cpp,%.o,$(filter $(sources_ext),$^))
 main: deps    = $(patsubst %.cpp,%.cpp.d,$^)
-main: $(sources)
+main: main.d
 	$(MAKE) -f Makefile.executable $(targets)
-	cat $(deps) > $@.d
 	g++ $(objects) -o $@
 
-aaa:
-	touch aaa
+main.d:
+	g++ -MM -MT main $(sources) > main.d
 
 .PHONY: clean
 clean:

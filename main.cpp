@@ -1,6 +1,6 @@
-
 #include "func.h"
 #include "main.h"
+
 
 int main()
 {
