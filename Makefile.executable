@@ -6,5 +6,6 @@
 
 
 
+#ifdef USE_INCUDE
 -include $(MAKECMDGOALS:.o=.cpp.d)
-
+#endif
