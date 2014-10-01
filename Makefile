@@ -37,20 +37,8 @@ all: main
 
 
 main: $(sources)
-
-main: objects    = $(patsubst %.cpp,%.o,$(filter $(sources_ext),$^)) 
-main: targets    = $(patsubst %.cpp,%.o,$(filter $(sources_ext),$?))
-main: deps       = $(patsubst %.cpp,%.cpp.d,$^)
-main: rev_prereq = $(call list_reverse,$+)
-main: bbb  = $(if $(and $(findstring aaa,aaba),$(findstring aaa,aaa)),equal,not equal)
-
 main:
-	echo $(bbb)
-	echo first: $< all: $+ chanded $?
-	echo rev_preq: $(rev_prereq)
-	$(MAKE) -f Makefile.executable $(targets)
-	cat $(deps) > $@.d
-	g++ $(objects) -o $@
+	$(MAKE) -f Makefile.executable sources="$(sources)" executable="main" full_deps="main.d"
 
 -include main.d
 

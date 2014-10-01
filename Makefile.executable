@@ -1,11 +1,22 @@
+ifndef sources
+$(error please pass sources)
+endif
+
+.SUFFIXES:
+
+objects    := $(sources:.cpp=.o)
+deps_files := $(patsubst %.cpp,%.cpp.d,$(sources))
 
 
-%.o: %.cpp
-	g++ -MM -MT '$@ main' $< > $<.d
+$(executable): $(objects) 
+	echo main: $$(cat $(deps_files) | grep -Po "[\w]+\.h" | sort | uniq | tr '\n' ' ') > main.d
+	g++ $^ -o $@
+
+%.o: %.cpp %.cpp.d
 	g++ -c $<
 
+%.cpp.d: %.cpp
+	g++ -MM  $< > $<.d
 
+-include  $(deps_files)
 
-#ifdef USE_INCUDE
--include $(MAKECMDGOALS:.o=.cpp.d)
-#endif
