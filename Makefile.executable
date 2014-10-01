@@ -1,7 +1,7 @@
 
 
 %.o: %.cpp
-	g++ -MM -MT '$@ aaa' $< > $<.d
+	g++ -MM -MT '$@ main' $< > $<.d
 	g++ -c $<
 
 
