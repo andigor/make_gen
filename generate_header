@@ -1,0 +1,17 @@
+#!/bin/bash
+
+uniq_name=$1
+
+echo "
+#ifndef HEADER_${uniq_name^^}_H
+#define HEADER_${uniq_name^^}_H
+
+#include <iostream>
+
+inline void print_${uniq_name}()
+{
+  std::cout << \"${uniq_name}\" << std::endl;
+}
+
+#endif
+"
