@@ -16,7 +16,10 @@ $(executable): $(objects)
 	g++ -c $<
 
 %.cpp.d: %.cpp
-	g++ -MM  $< > $<.d
+	g++ -MM -MG $< > $<.d
+
+$(gen_headers):%.h:
+	./generate_header $* > $@
 
 -include  $(deps_files)
 

@@ -1,4 +1,5 @@
 sources := main.cpp func.cpp
+gen_headers := generated1.h generated2.h
 
 sources_ext := %.cpp %.c %.h
 targets_ext := %.o
@@ -38,11 +39,11 @@ all: main
 
 main: $(sources)
 main:
-	$(MAKE) -f Makefile.executable sources="$(sources)" executable="main" full_deps="main.d"
+	$(MAKE) -f Makefile.executable sources="$(sources)" executable="main" full_deps="main.d" gen_headers="$(gen_headers)"
 
 -include main.d
 
 .PHONY: clean
 clean:
-	rm -f main *.o *.d
+	rm -f main *.o *.d $(gen_headers)
 
