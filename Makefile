@@ -1,5 +1,11 @@
-sources := main.cpp func.cpp
-gen_headers := generated1.h generated2.h
+sources                  := main.cpp func.cpp
+gen_headers              := generated1.h generated2.h
+another_gen_headers      := another_generated.h
+
+generators := \
+generated1.h_generator=generate_header            \
+generated2.h_generator=generate_header            \
+another_generated.h_generator=generate_another_header
 
 sources_ext := %.cpp %.c %.h
 targets_ext := %.o
@@ -39,7 +45,12 @@ all: main
 
 main: $(sources)
 main:
-	$(MAKE) -f Makefile.executable sources="$(sources)" executable="main" full_deps="main.d" gen_headers="$(gen_headers)"
+	$(MAKE) -f Makefile.executable \
+		sources="$(sources)" \
+		executable="main" \
+		full_deps="main.d" \
+		generate_headers="$(gen_headers) $(another_gen_headers)" \
+                $(generators)
 
 -include main.d
 
