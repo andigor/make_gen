@@ -8,8 +8,8 @@ objects    := $(sources:.cpp=.o)
 deps_files := $(patsubst %.cpp,%.cpp.d,$(sources))
 
 
-$(executable): $(objects) 
-	echo main: $$(cat $(deps_files) | grep -Po "[\w]+\.h" | sort | uniq | tr '\n' ' ') > main.d
+$(executable): $(objects)
+	echo main: $$(cat $(deps_files) | grep -Po "\w+\.h" | sort -u | tr '\n' ' ') > main.d
 	g++ $^ -o $@
 
 %.o: %.cpp %.cpp.d
