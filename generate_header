@@ -7,7 +7,7 @@ echo "
 #define HEADER_${uniq_name^^}_H
 
 #include <iostream>
-#include \"another_generated1\"
+#include \"another_generated.h\"
 
 inline void print_${uniq_name}()
 {

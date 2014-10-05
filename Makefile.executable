@@ -21,5 +21,6 @@ $(executable): $(objects)
 $(generate_headers):%.h:
 	./$($@_generator) $* > $@
 
--include  $(deps_files)
+$(deps_files):$(generate_headers)
 
+-include  $(deps_files)

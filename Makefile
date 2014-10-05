@@ -56,5 +56,5 @@ main:
 
 .PHONY: clean
 clean:
-	rm -f main *.o *.d $(gen_headers)
+	rm -f main *.o *.d $(gen_headers)  $(another_gen_headers)
 
